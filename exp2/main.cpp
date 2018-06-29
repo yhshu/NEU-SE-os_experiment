@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 int main() {
     int CPUTime = 0;
     PList pList;
@@ -21,25 +22,36 @@ int main() {
     pList.add(p5);
 
     cout << "Name NeedTime Priority" << endl;
-    cout << "P1          " << p1.needTime << "        " << p1.priority << endl;
-    cout << "P2          " << p2.needTime << "        " << p2.priority << endl;
-    cout << "P3          " << p3.needTime << "        " << p3.priority << endl;
-    cout << "P4          " << p4.needTime << "        " << p4.priority << endl;
-    cout << "P5          " << p5.needTime << "        " << p5.priority << endl;
+    p1.startInfo();
+    p2.startInfo();
+    p3.startInfo();
+    p4.startInfo();
+    p5.startInfo();
 
     cout << "\nOutput of priority:" << endl;
-    while (!pList.empty()) {
-        cout << "CPUTime:" << (CPUTime++) << endl;
+    bool final = false; // 标识是否为最后一次循环
+    while (!pList.empty() || final) {
+        cout << "\nCPUTime:" << (CPUTime++) << endl;
         cout << "Name CPUTime NeedTime Priority State" << endl;
-        pList.runInfo(p1);
-        pList.runInfo(p2);
-        pList.runInfo(p3);
-        pList.runInfo(p4);
-        pList.runInfo(p5);
-        pList.run();
+        p1.runInfo();
+        p2.runInfo();
+        p3.runInfo();
+        p4.runInfo();
+        p5.runInfo();
+        if (!final) {
+            pList.run();
+            if (pList.empty()) // 即将进入最后一次循环
+                final = true;
+        } else // 最后一次循环结束
+            break;
     }
 
-    cout << "The processes have been finished." << endl;
+    cout << "\nThe processes have been finished." << endl;
     cout << "Name RoundTime WaitingTime" << endl;
+    p1.finalInfo();
+    p2.finalInfo();
+    p3.finalInfo();
+    p4.finalInfo();
+    p5.finalInfo();
     return 0;
 }
