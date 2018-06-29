@@ -31,9 +31,12 @@ int main() {
     while (!pList.empty()) {
         cout << "CPUTime:" << (CPUTime++) << endl;
         cout << "Name CPUTime NeedTime Priority State" << endl;
-        cout << "P1         " << p1.needTime << "        " << p1.priority << "        " << p1.priority << " "
-             << p1.getState()
-             << endl;
+        pList.runInfo(p1);
+        pList.runInfo(p2);
+        pList.runInfo(p3);
+        pList.runInfo(p4);
+        pList.runInfo(p5);
+        pList.run();
     }
 
     cout << "The processes have been finished." << endl;

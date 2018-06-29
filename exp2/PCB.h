@@ -28,12 +28,15 @@ public:
     string getState();
 };
 
-PCB::PCB(string name, int time, int pri) : name(name), needTime(time), priority(pri), state(PCB_READY) {
+PCB::PCB(string name, int time, int pri) : name(name), needTime(time), priority(pri),
+                                           state(PCB_READY), next(nullptr), roundTime(0),
+                                           waitingTime(0) {
 }
 
 void PCB::run() {
-    priority--;
-    needTime--;
+    this->priority--;
+    this->needTime--;
+    this->state = PCB_WORKING;
 }
 
 string PCB::getState() {
