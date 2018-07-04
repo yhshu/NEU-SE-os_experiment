@@ -20,7 +20,9 @@ void OpenFile();   // 打开文件
 void CloseFile();  // 关闭文件
 void ReadFile();   // 读取文件
 void WriteFile();  // 写入文件
-void printUFD();
+void printMFD();
+
+void printAFD();
 
 vector<UFDE>::iterator getUFDE(string);
 
@@ -42,8 +44,6 @@ int main() {
             if (mfde.username == user) {
                 find = true;
                 userMFDE = &mfde;
-                // 显示该用户目录表UFD中所有的文件
-                // 初始化运行文件表AFD
             }
         }
         if (find) break;
@@ -54,7 +54,8 @@ int main() {
     while (true) {
         int command;
         bool quit = false;
-        printUFD(); // 显示打开文件表AFD
+        printMFD(); // 显示打开文件表AFD
+        printAFD();
         cout << "=============" << endl;
         cout << "1.新建文件" << endl;
         cout << "2.删除文件" << endl;
@@ -145,10 +146,41 @@ void CloseFile() {
     cin >> closeFile;
     auto closeAFDE = getAFDE(closeFile);
     if (closeAFDE == AFD.end()) {
-        cout << "[错误]该文件未打开" << endl;
+        cout << "[信息]该文件未打开" << endl;
         return;
     }
     AFD.erase(closeAFDE);
+}
+
+void ReadFile() {
+    string readFile;
+    int len = 0;
+    cout << "请输入读取文件名和读取长度：" << endl;
+    cin >> readFile >> len;
+    auto readAFDE = getAFDE(readFile);
+    if (readAFDE == AFD.end()) {
+        cout << "[错误]该文件不存在或未打开" << endl;
+        return;
+    }
+    auto readUFDE = getUFDE(readFile);
+    readAFDE->read = min(readUFDE->len, len); // 模拟读取
+    cout << "已读取 " << readFile << " ，长度 " << readAFDE->read << endl;
+}
+
+void WriteFile() {
+    string writeFile;
+    int len = 0;
+    cout << "请输入写入文件名和写入长度：" << endl;
+    cin >> writeFile >> len;
+    auto writeAFDE = getAFDE(writeFile);
+    if (writeAFDE == AFD.end()) {
+        cout << "[错误]该文件不存在或未打开" << endl;
+        return;
+    }
+    auto writeUFDE = getUFDE(writeFile);
+    writeUFDE->len += len;
+    writeAFDE->write = writeUFDE->len; // 模拟写入
+    cout << "已写入 " << writeFile << " ，文件长度 " << writeAFDE->write;
 }
 
 vector<UFDE>::iterator getUFDE(string filename) {
@@ -181,10 +213,22 @@ void init(vector<MFDE> &MFD) {
 }
 
 void printMFD() {
+    cout << "用户文件表：" << endl;
     for (UFDE &ufde:userMFDE->UFD) {
-        cout << "文件名：" << ufde.filename << "; ";
-        cout << "保护码：" << ufde.protect << "; ";
+        cout << "文件名：" << ufde.filename << "； ";
+        cout << "保护码：" << ufde.protect << "； ";
         cout << "文件长度：" << ufde.len << endl;
+    }
+    cout << endl;
+}
+
+void printAFD() {
+    cout << "打开文件表：" << endl;
+    for (AFDE &afde:AFD) {
+        cout << "文件名：" << afde.filename << "； ";
+        cout << "保护码：" << afde.protect << "； ";
+        cout << "读指针：" << afde.read << "； ";
+        cout << "写指针：" << afde.write << "； ";
     }
     cout << endl;
 }

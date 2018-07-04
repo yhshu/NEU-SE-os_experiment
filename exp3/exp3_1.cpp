@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <bitset>
 #include "PTE.h"
 
 using namespace std;
@@ -41,7 +42,7 @@ int main() {
                 if (pte.mark == 1) { // 存在于主存，形成绝对地址
                     memoryBlock = pte.memoryBlock;
                     absoluteAddress = memoryBlock * blockSize + unitNum;
-                    cout << "Absolute address: " << absoluteAddress << endl;
+                    cout << "Absolute address: " << bitset<sizeof(int) * 8>(absoluteAddress) << endl;
                 } else { // 不存在于主存，发生缺页中断
                     // 输出*页号
                     cout << "Page fault: *" << pte.number << endl;
