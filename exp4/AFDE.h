@@ -11,7 +11,7 @@ struct AFDE { // 打开文件目录表项
     int read; // 读指针
     int write; // 写指针
     AFDE(string f, int p) :
-            filename(f), protect(p) {}
+            filename(f), protect(p), read(0), write(0) {}
 };
 
 

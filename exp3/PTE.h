@@ -14,7 +14,7 @@ public:
     int diskLocation; // 在磁盘上的位置
 
     PTE(int n, int m, int d)
-            : number(n), mark(m), diskLocation(d) {}
+            : number(n), mark(m), memoryBlock(0), diskLocation(d) {}
 
     PTE(int n, int ma, int me, int d)
             : number(n), mark(ma), memoryBlock(me), diskLocation(d) {}
