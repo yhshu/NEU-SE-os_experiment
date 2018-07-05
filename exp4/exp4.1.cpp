@@ -1,5 +1,5 @@
 //
-// Created by ÊæÒâºã on 2018/7/4.
+// Created by èˆ’æ„æ’ on 2018/7/4.
 //
 
 #include <iostream>
@@ -8,18 +8,18 @@
 #include "UFDE.h"
 #include "AFDE.h"
 
-#define USER_MAX 10 // ×î´óÓÃ»§ÊıÁ¿
-#define SAVE_MAX 10 // Ã¿¸öÓÃ»§×î¶à¿É±£´æµÄÎÄ¼ş
-#define OPEN_MAX 5  // Ã¿¸öÓÃ»§×î¶à¿É´ò¿ªµÄÎÄ¼ş
+#define USER_MAX 10 // æœ€å¤§ç”¨æˆ·æ•°é‡
+#define SAVE_MAX 10 // æ¯ä¸ªç”¨æˆ·æœ€å¤šå¯ä¿å­˜çš„æ–‡ä»¶
+#define OPEN_MAX 5  // æ¯ä¸ªç”¨æˆ·æœ€å¤šå¯æ‰“å¼€çš„æ–‡ä»¶
 using namespace std;
 
-void init(vector<MFDE> &);       // ³õÊ¼»¯
-void CreateFile(); // ´´½¨ÎÄ¼ş
-void DeleteFile(); // É¾³ıÎÄ¼ş
-void OpenFile();   // ´ò¿ªÎÄ¼ş
-void CloseFile();  // ¹Ø±ÕÎÄ¼ş
-void ReadFile();   // ¶ÁÈ¡ÎÄ¼ş
-void WriteFile();  // Ğ´ÈëÎÄ¼ş
+void init(vector<MFDE> &);       // åˆå§‹åŒ–
+void CreateFile(); // åˆ›å»ºæ–‡ä»¶
+void DeleteFile(); // åˆ é™¤æ–‡ä»¶
+void OpenFile();   // æ‰“å¼€æ–‡ä»¶
+void CloseFile();  // å…³é—­æ–‡ä»¶
+void ReadFile();   // è¯»å–æ–‡ä»¶
+void WriteFile();  // å†™å…¥æ–‡ä»¶
 void printMFD();
 
 void printAFD();
@@ -33,12 +33,12 @@ vector<AFDE> AFD;
 MFDE *userMFDE;
 
 int main() {
-    init(MFD);  // ³õÊ¼»¯
+    init(MFD);  // åˆå§‹åŒ–
     string user;
     while (true) {
-        cout << "ÇëÊäÈëÓÃ»§Ãû£º" << endl;
+        cout << "è¯·è¾“å…¥ç”¨æˆ·åï¼š" << endl;
         cin >> user;
-        // ÔÚMFDÖĞ²éÕÒ¸ÃÓÃ»§
+        // åœ¨MFDä¸­æŸ¥æ‰¾è¯¥ç”¨æˆ·
         bool find = false;
         for (MFDE &mfde:MFD) {
             if (mfde.username == user) {
@@ -48,22 +48,22 @@ int main() {
         }
         if (find) break;
         else {
-            cout << "ÎŞ´ËÓÃ»§ÎÄ¼ş£¬ÇëÖØĞÂÊäÈë£º" << endl;
+            cout << "æ— æ­¤ç”¨æˆ·æ–‡ä»¶ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š" << endl;
         }
     }
     while (true) {
         int command;
         bool quit = false;
-        printMFD(); // ÏÔÊ¾´ò¿ªÎÄ¼ş±íAFD
+        printMFD(); // æ˜¾ç¤ºæ‰“å¼€æ–‡ä»¶è¡¨AFD
         printAFD();
         cout << "=============" << endl;
-        cout << "1.ĞÂ½¨ÎÄ¼ş" << endl;
-        cout << "2.É¾³ıÎÄ¼ş" << endl;
-        cout << "3.´ò¿ªÎÄ¼ş" << endl;
-        cout << "4.¹Ø±ÕÎÄ¼ş" << endl;
-        cout << "5.¶ÁÈ¡ÎÄ¼ş" << endl;
-        cout << "6.Ğ´ÈëÎÄ¼ş" << endl;
-        cout << "7.ÍË³ö" << endl;
+        cout << "1.æ–°å»ºæ–‡ä»¶" << endl;
+        cout << "2.åˆ é™¤æ–‡ä»¶" << endl;
+        cout << "3.æ‰“å¼€æ–‡ä»¶" << endl;
+        cout << "4.å…³é—­æ–‡ä»¶" << endl;
+        cout << "5.è¯»å–æ–‡ä»¶" << endl;
+        cout << "6.å†™å…¥æ–‡ä»¶" << endl;
+        cout << "7.é€€å‡º" << endl;
         cout << "=============" << endl;
         cin >> command;
         switch (command) {
@@ -85,44 +85,45 @@ int main() {
             case 6:
                 WriteFile();
                 break;
-            case 7:
+            case 7: {
                 quit = true;
                 break;
+            }
             default:
                 break;
         }
         if (quit)
             break;
     }
-    // ±£´æµ±Ç°ÎÄ¼şÄ¿Â¼
-    // ´òÓ¡µ±Ç°ÎÄ¼şÄ¿Â¼
+    // ä¿å­˜å½“å‰æ–‡ä»¶ç›®å½•
+    // æ‰“å°å½“å‰æ–‡ä»¶ç›®å½•
     return 0;
 }
 
 void CreateFile() {
     string createFile;
     int protect;
-    cout << "ÇëÊäÈëĞÂÎÄ¼şÃûÓëÈ¨ÏŞ£º" << endl;
+    cout << "è¯·è¾“å…¥æ–°æ–‡ä»¶åä¸æƒé™ï¼š" << endl;
     cin >> createFile >> protect;
     if (getUFDE(createFile) != userMFDE->UFD.end()) {
-        cout << "[´íÎó]¸ÃÎÄ¼şÒÑ´æÔÚ" << endl;
+        cout << "[é”™è¯¯]è¯¥æ–‡ä»¶å·²å­˜åœ¨" << endl;
         return;
     }
     if (userMFDE->UFD.size() < SAVE_MAX) {
         userMFDE->UFD.push_back(UFDE(createFile, protect));
     } else {
-        cout << "[´íÎó]ÎÄ¼ş±£´æÊıÁ¿´ïµ½ÉÏÏŞ" << endl;
+        cout << "[é”™è¯¯]æ–‡ä»¶ä¿å­˜æ•°é‡è¾¾åˆ°ä¸Šé™" << endl;
         return;
     }
 }
 
 void DeleteFile() {
     string deleteFile;
-    cout << "ÇëÊäÈëÉ¾³ıÎÄ¼şÃû£º" << endl;
+    cout << "è¯·è¾“å…¥åˆ é™¤æ–‡ä»¶åï¼š" << endl;
     cin >> deleteFile;
     auto deleteUFDE = getUFDE(deleteFile);
     if (deleteUFDE == userMFDE->UFD.end()) {
-        cout << "[´íÎó]¸ÃÎÄ¼ş²»´æÔÚ" << endl;
+        cout << "[é”™è¯¯]è¯¥æ–‡ä»¶ä¸å­˜åœ¨" << endl;
         return;
     }
     userMFDE->UFD.erase(deleteUFDE);
@@ -130,11 +131,11 @@ void DeleteFile() {
 
 void OpenFile() {
     string openFile;
-    cout << "ÇëÊäÈë´ò¿ªÎÄ¼şÃû£º" << endl;
+    cout << "è¯·è¾“å…¥æ‰“å¼€æ–‡ä»¶åï¼š" << endl;
     cin >> openFile;
     auto openUFDE = getUFDE(openFile);
     if (openUFDE == userMFDE->UFD.end()) {
-        cout << "[´íÎó]¸ÃÎÄ¼ş²»´æÔÚ" << endl;
+        cout << "[é”™è¯¯]è¯¥æ–‡ä»¶ä¸å­˜åœ¨" << endl;
         return;
     }
     AFD.push_back(AFDE(openUFDE->filename, openUFDE->protect));
@@ -142,11 +143,11 @@ void OpenFile() {
 
 void CloseFile() {
     string closeFile;
-    cout << "ÇëÊäÈë¹Ø±ÕÎÄ¼şÃû£º" << endl;
+    cout << "è¯·è¾“å…¥å…³é—­æ–‡ä»¶åï¼š" << endl;
     cin >> closeFile;
     auto closeAFDE = getAFDE(closeFile);
     if (closeAFDE == AFD.end()) {
-        cout << "[ĞÅÏ¢]¸ÃÎÄ¼şÎ´´ò¿ª" << endl;
+        cout << "[ä¿¡æ¯]è¯¥æ–‡ä»¶æœªæ‰“å¼€" << endl;
         return;
     }
     AFD.erase(closeAFDE);
@@ -155,40 +156,40 @@ void CloseFile() {
 void ReadFile() {
     string readFile;
     int len = 0;
-    cout << "ÇëÊäÈë¶ÁÈ¡ÎÄ¼şÃûºÍ¶ÁÈ¡³¤¶È£º" << endl;
+    cout << "è¯·è¾“å…¥è¯»å–æ–‡ä»¶åå’Œè¯»å–é•¿åº¦ï¼š" << endl;
     cin >> readFile >> len;
     auto readAFDE = getAFDE(readFile);
     if (readAFDE == AFD.end()) {
-        cout << "[´íÎó]¸ÃÎÄ¼ş²»´æÔÚ»òÎ´´ò¿ª" << endl;
+        cout << "[é”™è¯¯]è¯¥æ–‡ä»¶ä¸å­˜åœ¨æˆ–æœªæ‰“å¼€" << endl;
         return;
     }
     if (!readAFDE->protect) {
-        cout << "[´íÎó]ÎŞ¶ÁÈ¡È¨ÏŞ" << endl;
+        cout << "[é”™è¯¯]æ— è¯»å–æƒé™" << endl;
         return;
     }
     auto readUFDE = getUFDE(readFile);
-    readAFDE->read = min(readUFDE->len, len); // Ä£Äâ¶ÁÈ¡
-    cout << "ÒÑ¶ÁÈ¡ " << readFile << " £¬³¤¶È " << readAFDE->read << endl;
+    readAFDE->read = min(readUFDE->len, len); // æ¨¡æ‹Ÿè¯»å–
+    cout << "å·²è¯»å– " << readFile << " ï¼Œé•¿åº¦ " << readAFDE->read << endl;
 }
 
 void WriteFile() {
     string writeFile;
     int len = 0;
-    cout << "ÇëÊäÈëĞ´ÈëÎÄ¼şÃûºÍĞ´Èë³¤¶È£º" << endl;
+    cout << "è¯·è¾“å…¥å†™å…¥æ–‡ä»¶åå’Œå†™å…¥é•¿åº¦ï¼š" << endl;
     cin >> writeFile >> len;
     auto writeAFDE = getAFDE(writeFile);
     if (writeAFDE == AFD.end()) {
-        cout << "[´íÎó]¸ÃÎÄ¼ş²»´æÔÚ»òÎ´´ò¿ª" << endl;
+        cout << "[é”™è¯¯]è¯¥æ–‡ä»¶ä¸å­˜åœ¨æˆ–æœªæ‰“å¼€" << endl;
         return;
     }
     if (!writeAFDE->protect) {
-        cout << "[´íÎó]ÎŞĞ´ÈëÈ¨ÏŞ" << endl;
+        cout << "[é”™è¯¯]æ— å†™å…¥æƒé™" << endl;
         return;
     }
     auto writeUFDE = getUFDE(writeFile);
     writeUFDE->len += len;
-    writeAFDE->write = writeUFDE->len; // Ä£ÄâĞ´Èë
-    cout << "ÒÑĞ´Èë " << writeFile << " £¬ÎÄ¼ş³¤¶È " << writeAFDE->write;
+    writeAFDE->write = writeUFDE->len; // æ¨¡æ‹Ÿå†™å…¥
+    cout << "å·²å†™å…¥ " << writeFile << " ï¼Œæ–‡ä»¶é•¿åº¦ " << writeAFDE->write;
 }
 
 vector<UFDE>::iterator getUFDE(string filename) {
@@ -221,30 +222,30 @@ void init(vector<MFDE> &MFD) {
 }
 
 void printMFD() {
-    cout << "ÓÃ»§ÎÄ¼ş±í£º" << endl;
+    cout << "ç”¨æˆ·æ–‡ä»¶è¡¨ï¼š" << endl;
     if (!userMFDE->UFD.size()) {
-        cout << "¿Õ" << endl;
+        cout << "ç©º" << endl;
         return;
     }
     for (UFDE &ufde:userMFDE->UFD) {
-        cout << "ÎÄ¼şÃû£º" << ufde.filename << "£» ";
-        cout << "±£»¤Âë£º" << ufde.protect << "£» ";
-        cout << "ÎÄ¼ş³¤¶È£º" << ufde.len << endl;
+        cout << "æ–‡ä»¶åï¼š" << ufde.filename << "ï¼› ";
+        cout << "ä¿æŠ¤ç ï¼š" << ufde.protect << "ï¼› ";
+        cout << "æ–‡ä»¶é•¿åº¦ï¼š" << ufde.len << endl;
     }
     cout << endl;
 }
 
 void printAFD() {
-    cout << "´ò¿ªÎÄ¼ş±í£º" << endl;
+    cout << "æ‰“å¼€æ–‡ä»¶è¡¨ï¼š" << endl;
     if (!AFD.size()) {
-        cout << "¿Õ" << endl;
+        cout << "ç©º" << endl;
         return;
     }
     for (AFDE &afde:AFD) {
-        cout << "ÎÄ¼şÃû£º" << afde.filename << "£» ";
-        cout << "±£»¤Âë£º" << afde.protect << "£» ";
-        cout << "¶ÁÖ¸Õë£º" << afde.read << "£» ";
-        cout << "Ğ´Ö¸Õë£º" << afde.write << "£» ";
+        cout << "æ–‡ä»¶åï¼š" << afde.filename << "ï¼› ";
+        cout << "ä¿æŠ¤ç ï¼š" << afde.protect << "ï¼› ";
+        cout << "è¯»æŒ‡é’ˆï¼š" << afde.read << "ï¼› ";
+        cout << "å†™æŒ‡é’ˆï¼š" << afde.write << "ï¼› ";
     }
     cout << endl;
 }

@@ -1,5 +1,5 @@
 //
-// Created by 舒意恒 on 2018/7/3.
+// Created by 舒意恒 on 2018/7/5.
 //
 
 #include <iostream>
@@ -50,10 +50,14 @@ int main() {
                 if (pte.mark == 1) { // 存在于主存，形成绝对地址
                     memoryBlock = pte.memoryBlock;
                     absoluteAddress = memoryBlock * blockSize + unitNum;
-                    cout << "绝对地址: " << bitset<sizeof(int) * 3>(absoluteAddress) << endl;
+                    if (operation == "存") {
+                        // 置（页号）页修改标志“1”
+                    } else
+                        cout << "绝对地址: " << bitset<sizeof(int) * 3>(absoluteAddress) << endl;
                 } else { // 不存在于主存，发生缺页中断
                     // 输出*页号
                     cout << "缺页异常: *" << pte.number << endl;
+                    // 模拟FIFO页面调度
                 }
             }
         }
