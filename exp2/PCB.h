@@ -25,9 +25,9 @@ public:
 
     PCB(string, int, int);
 
-    void run();
+    void run();       // 运行
 
-    string getState();
+    string getState();// 获取进程状态
 
     void startInfo(); // 初始状态标准输出
 
@@ -42,11 +42,11 @@ PCB::PCB(string name, int time, int pri) : name(name), needTime(time), priority(
 }
 
 void PCB::run() {
-    this->next = nullptr;
-    this->priority--;
-    this->needTime--;
+    this->next = nullptr; // 从就绪队列中移出
+    this->priority--; // 优先级
+    this->needTime--; // 剩余所需运行时间
     this->state = PCB_WORKING;
-    this->started = true;
+    this->started = true; // 被调度过
 }
 
 string PCB::getState() {

@@ -1,5 +1,5 @@
 //
-// Created by èˆ’æ„æ’ on 2018/7/4.
+// Created by ÊæÒâºã on 2018/7/4.
 //
 
 #ifndef OS_EXPERIMENT_TREE_H
@@ -22,7 +22,7 @@ public:
     TreeNode(T val) :
             firstChild(nullptr), nextSibling(nullptr), parent(nullptr), val(val) {}
 
-    void insert(TreeNode *child) { // æ’å…¥ä¸ºå­ç»“ç‚¹
+    void insert(TreeNode *child) { // ²åÈëÎª×Ó½áµã
         TreeNode *cur = this->firstChild;
         if (cur == nullptr)
             this->firstChild = child;

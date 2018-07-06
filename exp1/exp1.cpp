@@ -86,6 +86,40 @@ void Take() {
     printBuffer();
 }
 
+// 消费item
+void Consume() {
+    cerr << "消费 #" << ConsumeItem << " ... ";
+    cerr << "完成" << endl;
+}
+
+// 生产者线程
+DWORD WINAPI Producer(LPVOID lpPara) {
+    while (toContinue) {
+        WaitForSingleObject(full, INFINITE);  // 等待缓冲区留出空位
+        WaitForSingleObject(mutex, INFINITE); // 线程间互斥
+        Produce();
+        Append();
+        Sleep(500);
+        ReleaseMutex(mutex);                   // 释放互斥锁
+        ReleaseSemaphore(empty, 1, NULL);      // 缓冲区不再为空
+    }
+    return 0;
+}
+
+// 消费者线程
+DWORD WINAPI Consumer(LPVOID lpPara) {
+    while (toContinue) {
+        WaitForSingleObject(empty, INFINITE);  // 等待缓冲区的item
+        WaitForSingleObject(mutex, INFINITE);  // 线程间互斥
+        Take();
+        Consume();
+        Sleep(500);
+        ReleaseMutex(mutex);                    // 释放互斥锁
+        ReleaseSemaphore(full, 1, NULL);        // 缓冲区有空位
+    }
+    return 0;
+}
+
 void printBuffer() {
     for (int i = 0; i < SIZE_OF_BUFFER; ++i) {
         int cur = buffer[i];
@@ -97,38 +131,4 @@ void printBuffer() {
         cout << endl;
     }
     cout << endl;
-}
-
-// 消费item
-void Consume() {
-    cerr << "消费 #" << ConsumeItem << " ... ";
-    cerr << "完成" << endl;
-}
-
-// 生产者线程
-DWORD WINAPI Producer(LPVOID lpPara) {
-    while (toContinue) {
-        WaitForSingleObject(full, INFINITE);
-        WaitForSingleObject(mutex, INFINITE);
-        Produce();
-        Append();
-        Sleep(500);
-        ReleaseMutex(mutex);
-        ReleaseSemaphore(empty, 1, NULL);
-    }
-    return 0;
-}
-
-// 消费者线程
-DWORD WINAPI Consumer(LPVOID lpPara) {
-    while (toContinue) {
-        WaitForSingleObject(empty, INFINITE);
-        WaitForSingleObject(mutex, INFINITE);
-        Take();
-        Consume();
-        Sleep(500);
-        ReleaseMutex(mutex);
-        ReleaseSemaphore(full, 1, NULL);
-    }
-    return 0;
 }

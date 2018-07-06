@@ -13,12 +13,9 @@ public:
 
     PList();
 
-    void add(PCB &);
-
-    PCB *run();
-
-    bool empty();
-
+    void add(PCB &);   // 按优先级将进程加入队列，并置队首标志
+    PCB *run();        // 队列取队首运行
+    bool empty();      // 判断队列是否为空
     void timeUpdate(); // 更新队列中进程的周转时间、CPU时间
 };
 
@@ -26,7 +23,7 @@ PList::PList() {
     head = nullptr;
 }
 
-void PList::add(PCB &p) { // 按优先级插入，并置队首标志
+void PList::add(PCB &p) { // 按优先级将进程加入队列，并置队首标志
     p.next = nullptr;
     if (empty()) { // 队列为空，直接插入
         this->head = &p;
