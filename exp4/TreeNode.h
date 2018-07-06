@@ -54,27 +54,25 @@ public:
     void Delete() {
         if (this->firstChild != nullptr)
             this->firstChild->Delete();
-        if (this->nextSibling != nullptr)
-            this->nextSibling->Delete();
         TreeNode *cur = this->parent;
         if (cur != nullptr)
             cur = cur->firstChild;
         TreeNode *pre = cur;
         if (pre == this)
-            this->parent->firstChild = pre->nextSibling;
+            this->parent->firstChild = this->nextSibling;
         else {
             cur = cur->nextSibling;
             assert(cur != nullptr);
             while (cur->nextSibling != nullptr) {
                 if (cur == this) {
                     pre->nextSibling = cur->nextSibling;
+                    break;
                 }
                 pre = pre->nextSibling;
                 cur = cur->nextSibling;
             }
         }
-        this->parent = this->firstChild = this->nextSibling = nullptr;
-        delete &val;
+        delete this;
     }
 };
 
