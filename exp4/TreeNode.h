@@ -24,13 +24,13 @@ public:
 
     void insert(TreeNode *child) { // 插入为子结点
         TreeNode *cur = this->firstChild;
-        if (cur == nullptr)
+        if (cur == nullptr) // 如果当前结点没有子结点
             this->firstChild = child;
-        else {
+        else {              // 如果当前结点含有子结点
             while (cur->nextSibling != nullptr) {
                 cur = cur->nextSibling;
             }
-            cur->nextSibling = child;
+            cur->nextSibling = child; // 新增为叶子结点
         }
         child->parent = this;
     }
@@ -52,7 +52,7 @@ public:
     }
 
     void Delete() {
-        if (this->firstChild != nullptr)
+        if (this->firstChild != nullptr) // 递归删除
             this->firstChild->Delete();
         TreeNode *cur = this->parent;
         if (cur != nullptr)

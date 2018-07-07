@@ -14,15 +14,14 @@
 using namespace std;
 
 void init(vector<MFDE> &);       // 初始化
-void CreateFile(); // 创建文件
-void DeleteFile(); // 删除文件
-void OpenFile();   // 打开文件
-void CloseFile();  // 关闭文件
-void ReadFile();   // 读取文件
-void WriteFile();  // 写入文件
-void printMFD();
-
-void printAFD();
+void CreateFile();               // 创建文件
+void DeleteFile();               // 删除文件
+void OpenFile();                 // 打开文件
+void CloseFile();                // 关闭文件
+void ReadFile();                 // 读取文件
+void WriteFile();                // 写入文件
+void printMFD();                 // 打印用户文件表
+void printAFD();                 // 打印打开文件表
 
 vector<UFDE>::iterator getUFDE(string);
 

@@ -19,7 +19,7 @@ int absoluteAddress; // 绝对地址
 vector<PTE *> pageTable;
 queue<PTE *> que;
 
-bool executeInstruction();
+bool executeInstruction(); // 执行指令：页面在主存中返回true，发生缺页中断返回false
 
 int main() {
     ifstream ifs("D:\\CLionProjects1\\os_experiment\\exp3\\operation.txt");
@@ -53,6 +53,11 @@ int main() {
             executeInstruction();
     }
     ifs.close();
+    cout << "主存中页号：" << endl;
+    while (que.size()) {
+        cout << que.front()->number << " ";
+        que.pop();
+    }
     return 0;
 }
 

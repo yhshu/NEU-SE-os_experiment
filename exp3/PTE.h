@@ -19,8 +19,6 @@ public:
 
     PTE(int n, int ma, int me, int d)
             : number(n), mark(ma), memoryBlock(me), diskLocation(d), modifyMark(0) {}
-
 };
-
 
 #endif //OS_EXPERIMENT_PAGETABLE_H

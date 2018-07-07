@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 project(os_experiment)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_EXE_LINKER_FLAGS -static)
 
 add_executable(exp1 exp1/exp1.cpp)
 add_executable(exp2 exp2/exp2.cpp exp2/PCB.h exp2/PList.h)

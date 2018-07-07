@@ -10,7 +10,7 @@ using namespace std;
 class File {
 public:
     string filename;
-    bool dir; // 目录或文件
+    bool dir; // 目录或文件类型
 
     string to_string() {
         return filename;
@@ -21,13 +21,11 @@ public:
     ~File() {}
 };
 
-void initFileTree(TreeNode<File> &); // 初始化文件
 void printPath(TreeNode<File> *); // 打印路径
 void listFiles(TreeNode<File> *); // 列举文件
 
 int main() {
     TreeNode<File> root(File("root", true));
-    initFileTree(root);
     TreeNode<File> *curDir = &root; // 当前目录
     while (true) {
         int command = 0;
@@ -118,10 +116,6 @@ int main() {
     }
     root.Delete();
     return 0;
-}
-
-void initFileTree(TreeNode<File> &root) {
-
 }
 
 void printPath(TreeNode<File> *curDir) {
