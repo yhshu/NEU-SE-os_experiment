@@ -40,8 +40,9 @@ public:
         stack<TreeNode *> stack;
         TreeNode *cur = this;
         stack.push(cur);
-        if (cur->parent != nullptr) {
+        while (cur->parent != nullptr) {
             stack.push(cur->parent);
+            cur = cur->parent;
         }
         while (stack.size()) {
             TreeNode *top = stack.top();
